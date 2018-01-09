@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+/* Define a altura do mapa para definir o tamanho da div=elemento que contém o mapa. */
+#map {
+height: 100%;
+}
+
+/* Preenche toda a janela. */
+html, body {
+height: 100%;
+margin: 0;
+padding: 0;
+}
