@@ -3,12 +3,11 @@
 2 - Criar tabela tbreg -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE [dbo].[tbreg](
-	[gid] [integer] NULL,
-	[geom] [geometry],
-	[tipo] [nvarchar](50) NULL,
-	[data] [date]
-) ON [PRIMARY]
-GO
+	[gid] [integer] NOT NULL PRIMARY KEY,
+	[geom] [geometry] NOT NULL,
+	[tipo] [nvarchar](50) NOT NULL,
+	[data] [date] NOT NULL
+);
 
 3 - Inserir os registros na tabela tbreg -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -118,15 +117,14 @@ values
 4- Criar a tabela tbmun -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE [dbo].[tbmun](
-	[gid] [integer] NULL,
-	[geom] [geometry],
-	[geocodigo] [nvarchar](10) NULL,
-	[municipio] [nvarchar](40) NULL,
-	[uf] [nvarchar](2) NULL,
-	[mesoreg] [nvarchar](40) NULL,
-	[microreg] [nvarchar](40) NULL
-) ON [PRIMARY]
-GO
+	[gid] [integer] NOT NULL PRIMARY KEY,
+	[geom] [geometry] NOT NULL,
+	[geocodigo] [nvarchar](10) NOT NULL,
+	[municipio] [nvarchar](40) NOT NULL,
+	[uf] [nvarchar](2) NOT NULL,
+	[mesoreg] [nvarchar](40) NOT NULL,
+	[microreg] [nvarchar](40) NOT NULL
+);
 
 5- Inserir os registros na tabela tbmun -------------------------------------------------------------------------------------------------------------------------------------------------
 
