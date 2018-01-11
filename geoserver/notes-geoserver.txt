@@ -1,0 +1,61 @@
+--- WEB MAP SERVICE ---
+Representação visual dos daos espaciais e não os dados em si.
+Representação no formato de imagens.
+
+Solicitação:
+URL contendo o endereço do serviço no servidor e parâmetros indicando as camadas
+do mapa, bounding box, tamanho da imagem e termos de consulta.
+Resposta:
+Mapa no formato de imagem.
+
+Operações WMS
+Obrigatórias: GetCapabilities e GetMap
+Opcionais: GetFeatureInfo, DescribeLayer e GetLegendGraphic
+
+--- WEB FEATURE SERVICE ---
+feições = geometria + atributo
+Formato GML
+
+Implementações:
+Básica: Consulta e recuperação de dados.
+Transacional: permite também, inserção, exclusão e edição.
+
+Solicitação:
+URL contendo o endereço do serviço no servidor e parâmetros indicando as camadas
+do mapa, bounding box, tamanho da imagem e termos de consulta.
+Resposta:
+Mapa no formato vetorial como GML, KML ou shapefile.
+
+Operações WFS
+GetCapabilities, DescribeFeatureType, GetFeature
+Operações WFST
+LockFeature
+Transaction
+
+--- GEO-CAMPOS E GEO-OBJETOS ---
+Geo-campos: Fenômenos contínuos
+geo-objetos: Fenômenos discretos
+
+--- COVERAGE ---
+representação digital de fenômenos no espaço-tempo
+
+--- WEB COVERAGE SERVICE ---
+Dados GeoTiff e GML
+
+--- GEOGRAPHIC MARKUP LANGUAGE ---
+Codificação XML para transporte e armazenamento de dados geográficos
+
+--- KEYHOLE MARKUP LANGUAGE ---
+Transporta, armazena e visualiza dados geográficos
+
+--- GeoJSON ---
+JSON = Formato de dados que suporta a criação de objetos na linguagem JavaScript
+Formato alternativo ao XML
+
+--- STYLED LAYER DESCRIPTOR ---
+Arquivo XML que possui a formatação de como os objetos geográficos
+serão apresentados no mapa
+
+
+
+
