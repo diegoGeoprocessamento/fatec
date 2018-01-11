@@ -1,4 +1,4 @@
---- WEB MAP SERVICE ---
+﻿--- WEB MAP SERVICE ---
 Representação visual dos daos espaciais e não os dados em si.
 Representação no formato de imagens.
 
@@ -56,6 +56,12 @@ Formato alternativo ao XML
 Arquivo XML que possui a formatação de como os objetos geográficos
 serão apresentados no mapa
 
+--- GEOSERVER ---
+Ferramenta para compartilhamento de dados espaciais
+Implementação de referência dos padrões WFS e WCS do OGC bem como WMS
+
+O geoserver organiza os dados em worspaces, dentro de cada worspaces
+existem camadas
 
 
 
