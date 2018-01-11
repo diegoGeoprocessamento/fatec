@@ -63,5 +63,48 @@ Implementação de referência dos padrões WFS e WCS do OGC bem como WMS
 O geoserver organiza os dados em worspaces, dentro de cada worspaces
 existem camadas
 
+Worspace
+É um Container para agrupar camadas e sotores
+URI - é semelhante a uma URL, a diferença é que o URI não precisa endereçar um recurso válido,
+basta que se único no contexoto do geoserver.
+
+Quando criado um workspace no geoserver ao mesmo tempo é criado uma pasta no diretório
+do computador: C:\Program Files (x86)\GeoServer 2.12.1\data_dir\worspaces
+
+Stores
+Fonte de dados que contém a configuração necessária para se concetar a uma fonte de dados.
+raster file - vector file - vector database - vector server WFS
+
+Quando criado um store no geoserver ao mesmo tempo é criado um arquivo XML com as configurações
+de acesso: C:\Program Files (x86)\GeoServer 2.12.1\data_dir\workspaces\test-jacarei\sql-server-geoserver
+Arquivo : datastore.xml
+
+Layers
+Conjunto de dados raster ou vetorial que representa uma coleção de feições geográficas.
+
+Vetor = Feature Types
+Raster Coverage
+
+O nome da camada é utilizado para pegar o JPEG da camada
+
+Quando criado um layer no geoserver ao mesmo tempo é criado uma pasta com os arquivos no diertório
+do computador: C:\Program Files (x86)\GeoServer 2.12.1\data_dir\workspaces\test-jacarei\sql-server-geoserver\jacarei-pol
+Arquivos: featuretype.xml e layer.xml
+
+Para verifiar as capacidades dos serviços WMS e WFS
+
+http://localhost:8080/geoserver/test-jacarei/wms?service=WMS&version=1.1.0&request=GetCapabilities
+http://localhost:8080/geoserver/test-jacarei/wfs?service=WMS&version=1.1.0&request=GetCapabilities
+
+Estilos
+Para criar estilos pode-se usar o Qgis para criar arquivos Styled Layer Descriptor (SLD) padrões OGC
+CSS ou YSLD
+
+Para adicionar um estilo para uma camada no geoserver deve-se acessar o menu styles
+
+Quando criado um estilo no geoserver ao mesmo tempo é criado um arquivo em uma pasta no diretório
+do computador: C:\Program Files (x86)\GeoServer 2.12.1\data_dir\workspaces\test-jacarei\styles
+
+Após criar o estilo pode-se alterar o estilo das camadas editando as mesmas na aba publish
 
 
