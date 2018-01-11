@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[tbreg](
 	[gid] [integer] NULL,
 	[geom] [geography],
 	[tipo] [nvarchar](50) NULL,
-	[data] [datetime]
+	[data] [date]
 ) ON [PRIMARY]
 GO
 
