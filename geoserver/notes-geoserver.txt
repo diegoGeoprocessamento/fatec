@@ -63,5 +63,25 @@ Implementação de referência dos padrões WFS e WCS do OGC bem como WMS
 O geoserver organiza os dados em worspaces, dentro de cada worspaces
 existem camadas
 
+workspaces são espaços de trabalho
+dentros destes espaços de trabalho existem containers 
+para agruapar as camadas e stores do mesmo tipo.
+
+Worspace
+até 10 caracteres / sem espaço e caracteres especiais
+Fornecer a URI, a URI é semelhante a uma URL a diferença
+é que a URI não precisa endereçar um recurso válido, basta somente que seja único
+no contexto do Geoserver.
+
+Stores
+Contém as configurações necessárias para se conectar a uma fonte de dados.
+A fonte de daods pode ser um arquivo, grupo de arquivos, tabela do BD ou um raster.
+possibilita que os parâmetros de conexão com uma fonte de daods sejam definidos uma única vez
+e utilizados em várias camadas.
+
+
+
+
+
 
 

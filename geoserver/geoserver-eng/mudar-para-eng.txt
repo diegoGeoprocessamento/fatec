@@ -1,0 +1,13 @@
+1- Entre na pasta C:\Program Files (x86)\GeoServer 2.12.1\webapps\geoserver\WEB-INF\lib 
+2- Encontre o arquivo gs-web-core-X.X.X.jar e renomei-o para .zip
+3- Abra o zip e procure o arquivo de properties (GeoServerApplication_pt_BR.properties).
+4- Exclua o arquivo
+5- Renomeie o arquivo gs-web-core-X.X.X.zip para gs-web-core-X.X.X.jar
+6- Repita os passos 2, 3, 4 e 5 para os arquivos:
+
+gs-web-demo-X.X.X.jar
+gs-web-sec-core-X.X.X.jar
+gs-web-gwc-X.X.X
+gs-web-wcs-X.X.X.jar
+gs-web-wfs-X.X.X.jar
+gs-web-wms-X.X.X.jar
