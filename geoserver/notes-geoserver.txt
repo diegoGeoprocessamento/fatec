@@ -63,6 +63,7 @@ Implementação de referência dos padrões WFS e WCS do OGC bem como WMS
 O geoserver organiza os dados em worspaces, dentro de cada worspaces
 existem camadas
 
+<<<<<<< HEAD
 workspaces são espaços de trabalho
 dentros destes espaços de trabalho existem containers 
 para agruapar as camadas e stores do mesmo tipo.
@@ -83,5 +84,97 @@ e utilizados em várias camadas.
 
 
 
+=======
+Worspace
+É um Container para agrupar camadas e sotores
+URI - é semelhante a uma URL, a diferença é que o URI não precisa endereçar um recurso válido,
+basta que se único no contexoto do geoserver.
+>>>>>>> 6f935e7947edd455dc559ffc372a3303a4c14e5b
 
+Quando criado um workspace no geoserver ao mesmo tempo é criado uma pasta no diretório
+do computador: C:\Program Files (x86)\GeoServer 2.12.1\data_dir\worspaces
+
+Stores
+Fonte de dados que contém a configuração necessária para se concetar a uma fonte de dados.
+raster file - vector file - vector database - vector server WFS
+
+Quando criado um store no geoserver ao mesmo tempo é criado um arquivo XML com as configurações
+de acesso: C:\Program Files (x86)\GeoServer 2.12.1\data_dir\workspaces\test-jacarei\sql-server-geoserver
+Arquivo : datastore.xml
+
+Layers
+Conjunto de dados raster ou vetorial que representa uma coleção de feições geográficas.
+
+Vetor = Feature Types
+Raster Coverage
+
+O nome da camada é utilizado para pegar o JPEG da camada
+
+Quando criado um layer no geoserver ao mesmo tempo é criado uma pasta com os arquivos no diertório
+do computador: C:\Program Files (x86)\GeoServer 2.12.1\data_dir\workspaces\test-jacarei\sql-server-geoserver\jacarei-pol
+Arquivos: featuretype.xml e layer.xml
+
+Para verifiar as capacidades dos serviços WMS e WFS
+
+http://localhost:8080/geoserver/test-jacarei/wms?service=WMS&version=1.1.0&request=GetCapabilities
+http://localhost:8080/geoserver/test-jacarei/wfs?service=WMS&version=1.1.0&request=GetCapabilities
+
+Estilos
+Para criar estilos pode-se usar o Qgis para criar arquivos Styled Layer Descriptor (SLD) padrões OGC
+CSS ou YSLD
+
+Para adicionar um estilo para uma camada no geoserver deve-se acessar o menu styles
+
+Quando criado um estilo no geoserver ao mesmo tempo é criado um arquivo em uma pasta no diretório
+do computador: C:\Program Files (x86)\GeoServer 2.12.1\data_dir\workspaces\test-jacarei\styles
+
+Após criar o estilo pode-se alterar o estilo das camadas editando as mesmas na aba publish
+
+*Combinar Camadas
+Na URL de acesso ao serviço, o parâmetro layers pode receber várias camadas, as mesmas devem
+ser separadas por vírgulas. A ordem das camadas na URL determina a ordem no mapa.
+
+http://localhost:8080/geoserver/test-jacarei/wms?service=WMS&version=1.1.0&request=GetMap&layers=test-jacarei:jacarei-pol,test-jacarei:jacarei-point&styles=&bbox=-46.3631041261475,-23.5417840610587,-45.6121482308441,-22.8165977151248&width=768&height=741&srs=EPSG:4326&format=application/openlayers
+
+*SQL Views
+A store deve apontar para um recurso de BD.
+
+Na opção de layers pode-se criar camadas baseadas em consultas SQL em SQL View
+select * from tbreg where tipo = 'asfalto'
+Após a confirmação de infomrçaões gerais do layer o mesmo é criado conforme a consulta
+
+Também pode-se criar views que recebem parâmetros na URL
+select * from tbreg where tipo = '%to%'
+
+Deve-se informar o parÂmetro do SQL e um valor padrão, será gerada uma expressão regular de validação
+Em seguida deve-se averiguar o SRID e marcar a opção da chave primária
+
+Na URL deve-se usar o parâmetro &viewparams no formato key:value cada key:value deve ser separada por ;
+http://localhost:8080/geoserver/test-jacarei/wms?service=WMS&version=1.1.0&request=GetMap&layers=test-jacarei:jacarei-tipo&styles=&bbox=-46.079340921586805,-23.3839604676792,-45.8300590833988,-23.2135795357284&width=768&height=524&srs=EPSG:4326&format=application/openlayers&viewparams=to:asfalto
+Selecionar os pontos com tipo asfalto
+
+Para a expressão regular de expressão aceitar caracteres especiais os mesmo devem ser informados
+^[\w\s|é|ã]+$
+aceita é e ã
+
+Mais utilizados:
+\d digitos 0-9
+\s caractere de espaço, tabulação e quebra de linha
+\w qualquer letra 
+| indica ou
+
+http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html
+Link para termos que podem ser usados em expressões
+
+http://regexr.com/
+Link para testar expressões
+
+Também pode-se formartar as views parametizadas para conter trechos da cláusula
+select * from tbreg %onde%
+Assim pode-se informar o parâmetro where por exemplo
+
+Para valor padrão pode-se desixar where true para pegar todos os valores
+http://localhost:8080/geoserver/test-jacarei/wms?service=WMS&version=1.1.0&request=GetMap&layers=test-jacarei:jacarei-tipo&styles=&bbox=-46.079340921586805,-23.3839604676792,-45.8300590833988,-23.2135795357284&width=768&height=524&srs=EPSG:4326&format=application/openlayers&viewparams=onde:where tipo like 'asfalto'
+
+Desta forma pode-se utilizar constultas espaciais também.
 

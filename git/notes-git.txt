@@ -1,0 +1,302 @@
+﻿Curso: https://www.youtube.com/watch?v=WVLhm1AMeYE&list=PLInBAd9OZCzzHBJjLFZzRl6DgUmOeG3H0
+
+sistema de controle de versão.
+
+Gerencia registra as alterações feitas em um arquivo com o passsar do tempo.
+
+Permiete o trabalho em equipe.
+
+Estação de trabalho => Repositório <= Estação de trabalho
+
+Controle de versão distribuído = Permite que uma cópia de todo o projeto fique em cada Estação de trabalho.
+
+Projeto 3 estágios:
+
+Working Directory = arquivo atual
+git add
+Staging Area = manda o arquivo atual para uma sala de espera
+git commit
+Git Directory = recebe o arquivo no Repositório
+
+Documentação: https://git-scm.com/doc
+
+* git Bash  = Terminal do git
+Onde ssão realizadas as operações
+
+* Configurações básicas iniciais
+git config --global user.name "geofatec"
+git config --global user.email "estagiojacarei@gmail.com"
+
+### 1 desenvolvedor utilizando git ###
+
+* Para configurar o caminho inicial do git deve-se acessar propiedades do git Bash
+e em iniciar em escolher a pasta desejada
+
+* cd para trocar de pastas
+
+* cd .. para voltar uma pasta
+
+* clear limpa a tela
+
+* git init para criar um repositório na pasta atual
+
+* git status para saber o satatus do repositório
+
+* git add nomeDoArquivo adicona o arquivo no controle de versão
+
+* git add *.txt adicona todos os arquivos com extensão txt
+
+* git add . adicona todos os arquivos que estiverem no diretório
+
+Neste momento os arquivos sairam do Working Directory e foram para o Staging Area
+
+* git commit -m "mensagem para identificar o commit"
+
+Através desta mensagem pode-se saber as alterações que foram realizadas
+
+Se utilizar git sttus novamente vai aparecer que não existem atualizações a serem realizadas
+
+Neste momento mandas os arquivos para o repositório
+
+* Para criar um arquivo que o git ignore 
+Criar o arquivo .gitignore e dentro deste arquivo informar o nome dos arquivos a serem ignorados, um arquivo por linha
+
+* git commit -a -m "mensagem para identificar o commit"
+Com este comando não precisa fazer a parte do add
+
+### Visualizar de forma mais detalhada as alterações dos arquivos ###
+
+* git diff
+Mostra a versão do arquivo e as alterações realizadas
+
+Para saber as alterações de arquivos que estejam na Stageing Area utilizar
+* git diff --staged
+
+Histórico de todos os commits
+* git log
+
+* git log -p
+Mostra o histórico das alterações e detalhes das alterações
+Ao final apertar q para digitar novos comandos
+
+* git log -p -1
+Mostra as alterações realizadas, o parâmetro -1 é a quantidade de paraâmetro que se deseja Visualizar
+
+* gitk
+Abre a interface gráfica para visuzlizar as alterações
+
+### Desfazer ou reverter situações no repositório ###
+
+* git log --pretty=oneline
+Mostra os códigos do commit e a mensagem do commit
+
+Para adicinoar alterações no commit anterior e nao criar um novo commit
+* git commit --amend -m "mensagem para identificar o commit"
+
+Remover arquivos do Staging Area
+* git reset HEAD nomeDoArquivo
+
+Para voltar o arquivo para ultima versão 
+* git checkout -- nomeDoArquivo
+
+Quando deletar um arquivo é preciso remover também com o comando
+* git rm nomeDoArquivo
+
+## TAGS E BRANCH ##
+
+Facilita acessar versões do projeto, e assim modificar, consutlar entre outras operações.
+
+Versões v0.0 v1.0 v1.2
+* git tag -a nomeDaTag -m "mensagem para identificar a tag"
+
+Para criar Tags para versões anteriores que não foram pré-criadas
+
+* git tag -a nomeDaTag chave -m "mensagem para identificar a tag"
+A chave pode ser acessada com o comando
+* git log --pretty=oneline
+
+* git show nomeDaTag
+Para saber maiores informações sobre a Tag
+
+Para acessar versões
+* git checkout nomeDaTag
+
+ou
+* git checkout chave
+
+* git checkout master
+Volta para a versão atual
+
+Para deletar uma Tag
+* git tag -d nomeDaTag
+
+Branch permite trabalhar com várias ramificações
+Permite criar cópias de segurança
+
+para criar
+* git branch nomeDoBranch
+
+para entrar
+* git checkout nomeDoBranch
+
+Criar e entrar
+* git checkout -b nomeDoBranch
+
+É possível criar ramificações para testes e deixar a versão original funcionando.
+Com o teste finalizado é possível atualizar as alterações.
+Em seguida esse Branch pode ser adicinonado ao projeto original.
+Deve-se acessar o Branch master e utilizar o comando
+
+* git merge nomeDoBranch
+
+Listar os Branch
+* git branch
+
+Deletar um Branch
+* git branch -d nomeDoBranch
+
+## REDE LOCAL ##
+
+--- SERVIDOR ---
+Máquina na rede com acesso nas outras estações
+Pasta do projeto compartilhada
+
+\\nome da máquina ou ip
+
+Criar uma pasta para cada serviço/projeto
+
+instalar o git no servidor
+
+* git init --bare
+
+--- ESTAÇÕES ---
+
+clonar o repositorio criar a base de desenvolvimento
+
+* git clone file:////nomeDoServidor/caminhoDesejado NomeDesejadoEstação
+
+Criar os arquivos base do projeto
+
+* git add .
+* git commit -m "mensagem para identificar o commit"
+
+Mandar os arquivos da estação para o servidor
+
+Descrobrir o servidor remoto
+* git remote
+
+* git push nomeDoRemote nomeDoBranch
+
+Quando terminar de realizar os comandos os arquivo não vão aparecer no servidor
+Pode-se clnar novamente com outro nome para verificar se ficou tudo certo
+
+--- SIMULAÇÃO ---
+Desenv1
+Desenv2
+
+Desenv1 altera algum arquivo do projeto
+* git commit -a -m "mensagem para identificar o commit"
+Desenv1 manda as alterações para o servidor
+* git push nomeDoRemote nomeDoBranch
+
+Desenv1 avisa o Desenv2 que fez modificações
+Desenv2 pega as atualizações
+* git pull nomeDoRemote nomeDoBranch
+
+git pull busca as atualizações e faz um merge
+
+Quando não for interessante realizar o merge pode-se criar outro Branch e utilizar o comando
+* git fetch nomeDoRemote NomeDoBranch
+Assim pode-se verificar as atualizações e realizar um merge
+
+## GITHUB EM CONJUNTO COM GIT ##
+
+Armazenamento na nuvem público
+criar uma conta no github
+
+Configurar o GITHUB para ter acesso ao computador onde é desenvolvido os projetos
+
+1- gerar par de chaves ssh
+* ssh-keygen
+nomeDoAquivo enter
+Senha enter
+Ao finalizar será exibido o local onde foi salvo a chave
+Geralmente é criado na pasta de perfil de usuário
+
+2- Abrir o arquivo que foi gerado e copiar o código
+id_rsa.pub
+
+3- Ir na conta github acessar o painel de Configurações
+Acessar a opção de ssh and gpg keys
+Ir na opção de adicinoar uma ssh key
+Preencher o campo do título da chave e colar o conteúdo do arquivo id_rsa.pub em key
+Clicar em add ssh key para finalizar
+
+Com término deste processo ja estará configurado o github para utilizar com git Bash
+
+--- Acessando o github no computador ----
+
+1- Criar um repositório no site do github
+
+2- Acessar o repositório no site e na opção Clone or Download escolher a opção use ssh
+Copiar o conteúdo para acessar no git Bash
+
+3- No git Bash utilizar o comando
+* git clone conteúdoCopiado nomeProjeto
+
+Depois para mandar os arquivos para o github
+* git add .
+* git commit -m "mensagem para identificar o commit"
+* git push nomeDoRemote nomeDoBranch // git push origin master
+
+Desta formar será realizado o upload dos arquivos
+
+Para criar outro repositório pode-se fazer outro clone da mesma forma anterior na rede local
+
+Para pegar as atualizações 
+* git pull nomeDoRemote nomeDoBranch // git pull origin master
+
+## COLABORANDO EM PROJETOS ##
+
+Para colaborar em projetos é possível fazer fork e copiar o repositório para seus 
+repositórios do github. Terminado o fork o github ja redireceiona para o projeto
+dentro do repositório da conta pessoal
+
+Terminado o fork deve-se clonar o projeto para o pc local da mesma forma que a etapa anterior
+
+Fazer as alterações como mostrador anteriormente e enviar para o repositório
+
+Em seguida deve-se enviar as alterações para o autor original do projeto apra ele verificar as alterações
+Deve-se clicar em pull request
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

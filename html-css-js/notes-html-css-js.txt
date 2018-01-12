@@ -1,0 +1,71 @@
+--- WEB ---
+3 Níveis
+
+- Esquema de nomes para localização das fontes URI
+- Protocolo de acesso para acessar as fontes HTTP
+- Linguagem hypertexto para navegação das fontes de informação HTML
+
+--- HTML ---
+Linguagem utilizada para a construção de páginas WEB
+
+--- DESENVOLVIMENTO CLIENT-SIDE ---
+
+Informação - HTML - Conteúdo
+Formatação - CSS - Aparência
+Comportamento - JavaScript - Funções
+
+--- Estrutura Básica HTML ---
+
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>title</title>
+    </head>
+    <body>
+        text
+    </body>   
+</html>
+
+* Existem dois tipos de links no HTML, a tag a que são links que levam para outros documentos e a
+tag link que são links para fntes externas que serão utilizadas no documento.
+
+--- FLOW CONTENT ---
+Elementos utilizados no <body></body>
+
+a - abbr - address - area - article - aside - audio - b - bdo - blockquote - br - button
+canvas - cite - code - command - datalist - del - details - dfn - div - dl - em - embed 
+fieldset - figure - footer - form - h1 até h6 - header - hgroup - hr - i - iframe
+img - input - ins - kdb - keygen - label - link - map - mark - math - menu - meta - meter
+nav - noscript - object - ol - output - p - pre - progress - q - ruby - samp - script
+section - select - small - span - strong - style - sub - sup - svg - table - textarea
+time - ul - var - video - wbr - text
+
+-- INPUT TYPE ---
+
+number - range - text - password - checkbox - radio - file - image - hidden - select
+textarea - button - datetime - date - month - week - number - range - email - url
+
+--- ELEMENTOS --- 
+
+<a href="http://www.google.com/">link</a>
+
+<table>
+    <caption>title</caption>
+    <th>header1</th><th>header2</th>
+    <tr><td>iten1</td><td>value1</td></tr>
+    <tr><td>iten2</td><td>value2</td></tr>
+    <tr><td>iten3</td><td>value3</td></tr>
+    <tr><td>iten4</td><td>value4</td></tr>
+</table>
+
+--- IMAGENS --- 
+
+<img src="image01.gif"> # mesma pata que o arquivo html
+<img src="img/image01.gif"> # outra pasta
+<img src="http://www.google.com/image01.gif"> # espaço da web
+
+alt="Descrição da Imagem"
+
+--- FORM ---
+19
