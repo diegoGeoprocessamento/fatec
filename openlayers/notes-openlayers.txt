@@ -1,0 +1,11 @@
+OpenLayers
+
+Biblioteca JavaScript Open Source para exibir dados espaciais em páginas web.
+Fornece uma API para construir aplicações geográficas baseadas na web semelhantes
+ao Google Maps e ao Bing Maps.
+
+Pode obter dados WMS, WFS, Google Maps, OpenStreetMap, Bing Maps, Geoserver, entre outros.
+Possui navegação pelo mouse e teclado, adição de marcadores seleção de layers, entre
+muitas outras ferramentas.
+
+--- Introdução ---
