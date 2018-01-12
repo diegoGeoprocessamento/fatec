@@ -9,3 +9,7 @@ Possui navegação pelo mouse e teclado, adição de marcadores seleção de lay
 muitas outras ferramentas.
 
 --- Introdução ---
+Mapa com um conjunto de camadas e controles para lidar com a interação.
+
+Mapa = marcação, declaração de estilo e inicialização.
+
