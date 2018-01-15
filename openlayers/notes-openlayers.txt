@@ -13,3 +13,69 @@ Mapa com um conjunto de camadas e controles para lidar com a interação.
 
 Mapa = marcação, declaração de estilo e inicialização.
 
+*** Conceitos básicos ***
+
+--- Mapa
+Componente central do OpenLayers (ol.Map)
+É processado para um target conatêiner (div elemento na página da Web)
+Todas as propriedades do mapa podem ser coniguradas em tempo de contrução.
+
+<div id="map" style="width: 100%, height: 400px"></div>
+<script>
+    var map = new ol.Map({target: 'map'});
+</script>
+
+--- Visão
+Responsável por coisas tipo o centro, nível de zoom e projeção do mapa (ol.View)
+
+map.setView(new ol.View({
+    center: [0. 0],
+    zoom: 2
+}));
+
+Um Ol.View também tem um projection quer determina o sistema de coordeanadas do center e
+as unidades para cálculos de resolução de mapas, se não for especificado a projeção padrão
+adotada é Spherical Mercator EPSG:3857, com metros como unidades de mapa.
+O zoom específica a resolução do mapa, podem ser determinados maxZoom(padrão 28), zoomFactor(padrão 2) e
+maxResolution(padrão caluculado de forma que a extensão de validade da projeção se encaixe
+na tela de 256x256 pixels).
+
+--- Fonte
+Para obter dados remotos para uma camada, o OpenLayers usa ol.source.Source sbclasses.
+Serviços gratuitos e comerciais como OpenStreetMap ou Bing, para fontes OGC como WMS ou WMTS
+e para dados vetoriais em formatos como GeoJSON ou KML.
+
+var osmSource = new ol.source.OSM();
+
+--- Camada
+Uma camada é uma representação visual de dados de um source.
+OpenLayers tem 3 tipos báiscos de camadas:
+
+ol.layer.Tile = fontes de camadas que forncem imagens como mosaico pré-renderizadas em grades que são organizadas
+por níveis de zoom para resoluções específicas.
+
+ol.layer.Image = imagens renderizadas pelo servidor que estão disponíveis para extensões arbitrárias
+de resoluções.
+
+ol.layer.Vector = dados vetoriais que são renderizados do lado do cliente.
+
+var osmLayer = new ol.layer.Tile({source: osmSource});
+map.addLayer(osmLayer);
+
+*** Juntando as informações ***
+
+<div id="map" style="width: 100%, height: 400px"></div>
+<script>
+  new ol.Map({
+    layers: [
+      new ol.layer.Tile({source: new ol.source.OSM()})
+    ],
+    view: new ol.View({
+      center: [0, 0],
+      zoom: 2
+    }),
+    target: 'map'
+  });
+</script>
+
+

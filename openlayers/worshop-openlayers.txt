@@ -1,0 +1,173 @@
+1- Após descompactar ir até o diretório e instalar as dependências adicionais:
+npm install
+
+Desta forma pode-se acessar o servidor do workshop
+npm start
+
+Este comando inicializarã o servdor de desenvolvimento onde pode-se ler a documentação e fazer
+os exercícios:
+http://localhost:3000
+
+--- Criando um mapa ---
+No openlayers um mapa é uma coleção de camdas e várias interações e controles.
+
+mapa = marcação, declaração de estilo e código e inicialização.
+
+--- Marcação HTML para o mapa ---
+
+elemento DOM único:
+
+<div id="map"></div>
+
+este elemento servirá como contêiner para visualização do mapa.
+Fornecendo um id para o elemento o mesmo pode ser referenciado como target do mapa.
+
+--- Estilo do mapa ---
+
+O openlayers vem com uma folha de estilo padrão que específica como os elementos relacionados
+ao mapa devem ser exibidos.
+
+<link rel="stylesheet" href="/ol.css" type="text/css">
+
+O openlayers não atribui nenhum tamanho padrão para o mapa. Assim seguindo a folha de estilo é preciso
+declarar o tamanho do mapa.
+
+<link rel="stylesheet" href="/ol.css" type="text/css">
+<style>
+  #map {
+    height: 256px;
+    width: 512px;
+  }
+</style>
+
+--- Inicialização do mapa ---
+
+<script>
+    var map = new ol.Map({
+      target: 'map',
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'https://ahocevar.com/geoserver/wms',
+            params: {LAYERS: 'nasa:bluemarble', TILED: true}
+          })
+        })
+      ],
+      view: new ol.View({
+        projection: 'EPSG:4326',
+        center: [0, 0],
+        zoom: 0,
+        maxResolution: 0.703125
+      })
+    });
+</script>
+
+Antes do script ser executado o openlayers deve ser carregado, o open layers é carregado no <head>
+do documento com o elemento:
+<script src="/loader.js"></script>
+
+A inicialização do mapa no código não pode ser executada até que o elemento que servirá como 
+contêiner (<div></div>) estar pronto. Incluindo o código na parte inferior do elemento <body>
+é garantido que o código da biblioteca está carregado e que o contêiner está promto para receber
+o mapa.
+
+O script cria um novo objeto ol.Map com as opções de configuração:
+target: 'map'
+
+O id do contêiner é informado para o construtor do objeto identtificar onde o mapa deve ser 
+renderizado. Poderia ser referenciado também de maneira direta como por exemplo: document.getElemetnById("map")
+
+No trecho layers é configurado uma camada que será exibida no mapa:
+
+layers: [
+  new ol.layer.Tile({
+    source: new ol.source.TileWMS({
+      url: 'https://ahocevar.com/geoserver/wms',
+      params: {LAYERS: 'nasa:bluemarble', TILED: true}
+    })
+  })
+],
+
+A visualização do mapa é uma coleção de camadas, e para ver uma mapa é preciso incluir ao menos
+uma camada.
+
+No final é definida a view, foi especificada uma projeção (projection), um centro (center) e 
+um nível de zoom (zoom). Também foir fornecida a resolção máxima (maxResolution) para garantir
+que não serão geradas requisições (bounding boxes) que o GeoWebCache não possa atender.
+
+view: new ol.View({
+    projection: 'EPSG:4326',
+    center: [0, 0],
+    zoom: 0,
+    maxResolution: 0.703125
+})
+
+*** MAPA EXEMPLO *** O TUTORIAL ESTAVA COM PROBELMAS PARA LOCALIZAR OS ARQUIVOS CSS E JS ***
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.4/css/ol.css" type="text/css">
+    <style>
+      #map {
+        height: 256px;
+        width: 512px;
+      }
+    </style>
+    <title>OpenLayers example</title>
+    <script src="https://openlayers.org/en/v4.6.4/build/ol.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <h1>My Map</h1>
+    <div id="map"></div>
+    <script type="text/javascript">
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            title: 'Global Imagery',
+            source: new ol.source.TileWMS({
+              url: 'https://ahocevar.com/geoserver/wms',
+              params: {LAYERS: 'nasa:bluemarble', TILED: true}
+            })
+          })
+        ],
+        view: new ol.View({
+          projection: 'EPSG:4326',
+          center: [0, 0],
+          zoom: 0,
+          maxResolution: 0.703125
+        })
+      });
+    </script>
+  </body>
+</html>
+
+*** Exemplos ***
+
+http://openlayers.org/en/master/examples/
+
+*** API ***
+
+https://openlayers.org/en/latest/apidoc/
+
+--- CAMADAS WMS ---
+
+Quando adiconada uma camada no mapa a fonte de dados da camada é responsável por obter os
+dados a serem exibidos. Podem ser requisistados dados tipo raster ou vetorial.
+Dados raster são informações renderizadas pelo servidor em formato de imagem, um dado
+vetorial é entregue pelo servidor como uma informação estruturada e pode ser renderizada pelo
+cliente.
+
+--- Criando uma camada ---
+
+Construtor da classe ol.layer.Tile
+Aceita como parâmetro um objeto literal do tipo ol.layer.TileOptions.
+No exemplo foi passado a chave source por meio do objeto ol.source.TileWMS, a camada pode receber
+um título legivel por meio da chave title.
+No openlayers existe uma separação entre as camadas (layers) e as fontes de dados (sources).
+ol.layer.Tile representa uma grade regular de imagens, ol.layer.Image representa uma única
+imagem, dependendo do tipo da camada pode-se usar uma fonte de dados diferente.
+
+
+Construtor da classe ol.sourceTileWMS
