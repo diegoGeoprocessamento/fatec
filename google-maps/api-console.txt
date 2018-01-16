@@ -1,3 +1,17 @@
+
+--- Google ---
+
+diego.geoprocessamento@gmail.com
+
 Link: https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&reusekey=true&pli=1
 
 Minha Chave: AIzaSyDwkRVrWvNjSqi-OnhvcvPGDu6-rl1a4u4
+
+
+--- Bing ---
+
+diego.centroid@hotmail.com
+
+Link: https://www.bingmapsportal.com/?lc=1033
+
+Minha Chave: AoVJ71D15IbGN1qW3RjUvJB_Miat88m3w2Lk1KtxsiQulKfQIY006BjrXWQgeR8m

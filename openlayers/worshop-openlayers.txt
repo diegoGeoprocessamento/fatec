@@ -422,3 +422,49 @@ controls: ol.control.defaults({
 
 Desta forma o botão i é removido e mantém a informação de atribuição sempre visível.
 
+--- CAMADAS RASTER PROPRIETÁRIAS ---
+As camadas anteriores estão em conformidade com o padrão WMS e um cache personalizado de tiles. Existem serviços de mapas online
+que também fornecem serviços de tiles proprietários. O openlayers também fornece tipos de camadas que trabalham com esses serviços
+proprietários por meio de suas APIs.
+
+--- CAMADAS BING ---
+
+Adicionar:
+
+ol.source.BingMaps ({
+  ImagerySet: 'Road'
+  key: 'Bing Maps Key'
+})
+
+--- CAMADAS VETORIAIS ---
+Camadas veoriais são repreentadas pela classe ol.layer.Vector e delegam para o cliente a renderizaçã dos dados.
+O openlayers suporta uma renderização vetorial completa utilziando o canvas, mas somente geometrias do tipo ponto no WebGL.
+
+--- EXEMPLO ---
+Utilizar o exemplo WMS para gerar um mapa básico do mundo e adicionar geometrias sobre o mapa em uma camada vetorial.
+
+Adicione outra camada depois da camada Tile:
+
+new ol.layer.Vector({
+  title: 'Earthquakes',
+  source: new ol.source.Vector({
+    url: '/data/layers/7day-M2.5.json',
+    format: new ol.format.GeoJSON()
+  }),
+  style: new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 3,
+      fill: new ol.style.Fill({color: 'white'})
+    })
+  })
+})
+
+Isto adiciona uma nova camada vetorial ao mapa, ela requisitará um conjunto de features armazenadas no formato GeoJSON.
+
+A camda recebe o título Earthquakes e outras opções, dentre as opções é incluída a chava source do tipo ol.source.Vector que aponta para
+a utrl e também é fornecido o formato (format) que será utilizado para fazer o parser dos dados.
+
+*Para estilizar features em função de algum atributo, pode-se utilizar uma funçãi de estilo ao invés do ol.style.Style para a opção
+style da classe ol.layer.Vector
+
+
