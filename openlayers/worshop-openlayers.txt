@@ -467,4 +467,67 @@ a utrl e também é fornecido o formato (format) que será utilizado para fazer 
 *Para estilizar features em função de algum atributo, pode-se utilizar uma funçãi de estilo ao invés do ol.style.Style para a opção
 style da classe ol.layer.Vector
 
+*** EXEMPLO ***
+Os círculos brancos no mapa representam um objeto ol.Feature da camada ol.layer.Vector cada uma dessas features possuem as propriedades
+title e summary. Fazer um listener 'singleclick' no mapa que chama o método forEachFeatureArPixel e mostrar as informações:
+
+<div id="info"></div>
+<script>
+  map.on('singleclick', function(e) {
+    var feature = map.forEachFeatureAtPixel(e.pixel, function(feature) {
+      return feature;
+    });
+    var infoElement = document.getElementById('info');
+    infoElement.innerHTML = feature ? feature.get('title') + "</br>" + feature.get('summary'): '';
+  });
+</script>
+
+Colocar esta div abaixo do mapa para mostrar as propriedades title e summary
+
+*** OBSERVAÇÃO ***
+infoElement.innerHTML = feature ? feature.get('title') : '';
+Operador ternário => Condição ? Verdadeiro : Falso ;
+
+É a mesma coisa que um if/else
+if (condição){
+  Verdadeiro
+}
+else {
+  Falso
+}
+
+--- Fontes de imagens vetoriais ---
+Como uma camada vetorial o openlayers irá redesenhar a fonte de dados cada vez que o mapa sofre algum deslocamento.
+Isto fornece uma renderezação consistente de acordo com a resolução atual do mapa.
+Para evitar essa renderização durante as transições, reposicionando e escalando a geometria em função do seu estado anterior
+pode ser feita utilziando as classes ol.layer.Image e ol.sourceImageVector, com esta combinação "snapshots" do dados são renderizados
+quando a visualização não está sendo alterada e estes snapshots são reusados durante as transições de visualização.
+
+utilizando o arquivo inicial, altere a camada vetorial para:
+
+new ol.layer.Image({
+  title: 'Earthquakes',
+  source: new ol.source.ImageVector({
+      source: new ol.source.Vector({
+          url: '/data/layers/7day-M2.5.json',
+          format: new ol.format.GeoJSON()
+      }),
+      style: new ol.style.Style({
+          image: new ol.style.Circle({
+              radius: 3,
+              fill: new ol.style.Fill({color: 'white'})
+          })
+      })
+  })
+})
+
+Foi utilizado a classe ol.layer.Image ao invés da ol.layer.Vector, entretando pode-se ainda usar dados vetoiais a partir da classe ol.source.ImageVector, 
+fazendo uso da fonte original da classe ol.source.Vector, o estilo fornecido é para a configuraçã da classe ol.source.ImageVector e não para a camada.
+
+*** IMPORTANTE ***
+Os dados vetoriais serão representados como imagens, ainda será possível fazer a detecção das geometrias, mas os dados vetoriais terão
+uma qualidade menor.
+
+--- Controle de Interação ---
+
 
