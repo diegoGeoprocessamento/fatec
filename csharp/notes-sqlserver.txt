@@ -37,7 +37,7 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ConsoleApplication1
+namespace Geocoding
 {
     class Program
     {
@@ -77,4 +77,83 @@ namespace ConsoleApplication1
 }
 
 5. Criar um script em csharp para codificar o resultado da consulta anterior
+
+// Default
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+// SQL Server
+using System.Data;
+using System.Data.SqlClient;
+
+// Geocoding
+using System.Net;
+using System.Xml.Linq;
+
+namespace Geocoding
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string strcon = "Data source=fe80::414e:6ed4:547:5e66%9;initial catalog=Projeto;User ID=sa;Password=123";
+            SqlConnection conexao = new SqlConnection(strcon);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.tbrgeocod", conexao);
+
+            try
+            {
+                int count = 0;
+                List<string> list = new List<string>();
+                conexao.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(reader[1].ToString() + "," + reader[2].ToString() + "," + reader[3].ToString() + "," + reader[4].ToString() + "," + reader[5].ToString() + "," + reader[6].ToString());
+                    //Console.WriteLine(list[count].ToString());
+
+                    string address = list[count];
+                    string requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
+
+                    WebRequest request = WebRequest.Create(requestUri);
+                    WebResponse response = request.GetResponse();
+                    XDocument xdoc = XDocument.Load(response.GetResponseStream());
+
+                    XElement result = xdoc.Element("GeocodeResponse").Element("result");
+                    XElement locationElement = result.Element("geometry").Element("location");
+
+                    XElement lat = locationElement.Element("lat");
+                    string latitude = lat.ToString();
+                    XElement lng = locationElement.Element("lng");
+                    string longitude = lng.ToString();
+
+                    //Console.WriteLine(lat.ToString() + "," + lng.ToString());
+
+                    string rlat = latitude.Replace("<lat>","").Replace("</lat>","");
+                    string rlng = longitude.Replace("<lng>", "").Replace("</lng>", "");
+                    Console.WriteLine(rlat + "," + rlng);
+
+                    count += 1;
+
+                }
+
+                Console.ReadLine();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro " + ex.Message);
+                Console.ReadLine();
+                throw;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+        }
+    }
+}
+
+6. Criar um script em csharp para inserir os dados que foram geocodificados em um tabela
 
