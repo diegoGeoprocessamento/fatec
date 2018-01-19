@@ -1,13 +1,13 @@
 1. Criar a tabela onde serão inseridos os endereços
 
 CREATE TABLE [dbo].[tbrgeocod](
-	[id] [integer] NOT NULL PRIMARY KEY,
-	[rua] [nvarchar](50) NOT NULL,
-	[numero] [integer],
-	[bairro] [nvarchar](30) NOT NULL,
-	[cidade] [nvarchar](20) NOT NULL,
-	[estado] [nvarchar](20) NOT NULL,
-	[cep] [integer]
+	[id] int identity NOT NULL PRIMARY KEY,
+	[rua] nvarchar(50) NOT NULL,
+	[numero] nvarchar(5),
+	[bairro] nvarchar(30) NOT NULL,
+	[cidade] nvarchar(20) NOT NULL,
+	[estado] nvarchar(20) NOT NULL,
+	[cep] nvarchar(9)
 );
 
 2. Alimentar a tabela one serão inseridos os endereços
@@ -23,9 +23,9 @@ values
 3. Criar a tabela onde será escrito o resultado da geocodificação
 
 CREATE TABLE [dbo].[tbwgeocod](
-	[id] [integer] NOT NULL PRIMARY KEY,
-	[lat] [numeric](20) NOT NULL,
-	[lon] [numeric](20) NOT NULL
+	[id] integer identity NOT NULL PRIMARY KEY,
+	[lat] float NOT NULL,
+	[lon] float NOT NULL
 );
 
 4. Criar um arquivo csharp que realize a conexão com o SQL Server e realize a consulta dos dados de interesse
@@ -156,4 +156,66 @@ namespace Geocoding
 }
 
 6. Criar um script em csharp para inserir os dados que foram geocodificados em um tabela
+
+select *
+from dbo.tbwgeocod as a , dbo.tbrgeocod as b
+where a.id = b.id;
+
+
+
+
+insert into tbrgeocod (rua,numero,bairro,cidade,estado,cep)
+values
+('Rua Orual Salvador','543','Jardim Santa Maria','Jacareí','São Paulo','12328470'),
+('Rua Mariana','157','Centro','Jacareí','São Paulo','12308180'),
+('Avenida Nove de Julho','473','Centro','Jacareí','São Paulo','12327682'),
+('Rua José Benedito Duarte','59','Vila Pinheiro','Jacareí','São Paulo','12307200'),
+('Rua Borba Gato','48','Jardim Paraíba','Jacareí','São Paulo','12327681'),
+('Avenida Romulo Rossi','101','Jardim Santo Antonio da Boa Vista','Jacareí','São Paulo','12315660'),
+('Avenida Faria Lima','155','jardim Santa Marina','Jacareí','São Paulo','12328070'),
+('Rua Barão de Jacareí','816','Centro','Jacareí','São Paulo','12300000'),
+('Avenida Siqueira Campos','55','Centro','Jacareí','São Paulo','12300000'),
+('Rua Miguel Francisco','177','Jardim Emília','Jacareí','São Paulo','12300000'),
+('Rua Carlos Porto','25','Centro','Jacareí','São Paulo','12300000'),
+('Rua Uruguai','44','Jardim Siesta','Jacareí','São Paulo','12300000'),
+('Rua Estados Unidos','25','Jardim Siesta','Jacareí','São Paulo','12300000'),
+('Avenida Pensilvânia','225','jardim Flórida','Jacareí','São Paulo','12300000'),
+('Rua Texas','44','Jardim Flórida','Jacareí','São Paulo','12300000'),
+('Rodovia Nilo Máximo','317','Vila Zezé','Jacareí','São Paulo','12300000'),
+('Avenida Minas Gerais','580','Vila Pinheiro','Jacareí','São Paulo','12300000'),
+('Rua Pará','189','Vila Pinheiro','Jacareí','São Paulo','12300000'),
+('Rua dos Ferroviários','480','Jardim Pereira do Amparo','Jacareí','São Paulo','12300000'),
+('Avenida Engenheiro Davi Monteiro Lino','646','Jardim Mesquita','Jacareí','São Paulo','12300000'),
+('Rua Benardino de Campos','279','Centro','Jacareí','São Paulo','12300000'),
+('Rua Floriano Peixoto','282','Centro','Jacareí','São Paulo','12300000'),
+('Rua Rui Barbosa','374','Centro','Jacareí','São Paulo','12300000'),
+('Rua Irmãos Cachuté','56','Centro','Jacareí','São Paulo','12300000'),
+('Rua João Teodoro','274','Centro','Jacareí','São Paulo','12300000'),
+('Rua dos Ibiscos','227','Parque Santo Antonio','Jacareí','São Paulo','12300000'),
+('Avenida Nícola Capuci','2','Cidade Jardim','Jacareí','São Paulo','12300000'),
+('Rodovia General Euryale de Jesus Zerbine','5120','Bandeira Branca','Jacareí','São Paulo','12300000'),
+('Rua Israel Albino','90','Bandeira Branca','Jacareí','São Paulo','12300000'),
+('Rua José Nicolau Costa','322','Jardim Terras de São João','Jacareí','São Paulo','12300000'),
+('Rua José Vicente','79','Residencial Santa Paula','Jacareí','São Paulo','12300000'),
+('Rua Maranhão','160','Residencial Santa Paula','Jacareí','São Paulo','12300000'),
+('Rua Henrique da Cunha','115','Cidade Nova jacareí','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000'),
+('','','','Jacareí','São Paulo','12300000');
 
