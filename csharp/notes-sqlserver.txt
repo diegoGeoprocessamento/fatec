@@ -1,168 +1,16 @@
-1. Criar a tabela onde serão inseridos os endereços
+1. Criar a tabela onde serão inseridos os endereços -----------------------------------------------------------------------------------------
 
 CREATE TABLE [dbo].[tbrgeocod](
 	[id] int identity NOT NULL PRIMARY KEY,
 	[rua] nvarchar(50) NOT NULL,
 	[numero] nvarchar(5),
-	[bairro] nvarchar(30) NOT NULL,
-	[cidade] nvarchar(20) NOT NULL,
-	[estado] nvarchar(20) NOT NULL,
+	[bairro] nvarchar(50) NOT NULL,
+	[cidade] nvarchar(10) NOT NULL,
+	[estado] nvarchar(10) NOT NULL,
 	[cep] nvarchar(9)
 );
 
-2. Alimentar a tabela one serão inseridos os endereços
-
-insert into tbrgeocod (id,rua,numero,bairro,cidade,estado,cep)
-values
-(1,'Rua Orual Salvador',543,'Jardim Santa Maria','Jacareí','São Paulo',12328470),
-(2,'Rua Mariana',157,'Centro','Jacareí','São Paulo',12308180),
-(3,'Avenida Nove de Julho',473,'Centro','Jacareí','São Paulo',12327682),
-(4,'Rua José Benedito Duarte',59,'Vila Pinheiro','Jacareí','São Paulo',12307200),
-(5,'Rua Borba Gato',48,'Jardim Paraíba','Jacareí','São Paulo',12327681);
-
-3. Criar a tabela onde será escrito o resultado da geocodificação
-
-CREATE TABLE [dbo].[tbwgeocod](
-	[id] integer identity NOT NULL PRIMARY KEY,
-	[lat] float NOT NULL,
-	[lon] float NOT NULL
-);
-
-4. Criar um arquivo csharp que realize a conexão com o SQL Server e realize a consulta dos dados de interesse
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-using System.Data.SqlClient;
-
-namespace Geocoding
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            string strcon = "Data source=10.68.54.16,1433;initial catalog=Spatial_Test;User ID=sa;Password=123456";
-            SqlConnection conexao = new SqlConnection(strcon);
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.tbrgeocod", conexao); 
-
-            try
-            {
-                int count = 0;
-                List<string> list = new List<string>();
-                conexao.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                 while (reader.Read()) {
-                    list.Add(reader[1].ToString() + "," + reader[2].ToString() + "," + reader[3].ToString() + "," + reader[4].ToString() + "," + reader[5].ToString() + "," + reader[6].ToString());
-                    Console.WriteLine(list[count].ToString());
-                    count += 1;
-                }
-                 
-                Console.ReadLine();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Erro " + ex.Message);
-                Console.ReadLine();
-                throw;
-            }
-            finally
-            {
-                conexao.Close();
-            }
-        }
-    }
-}
-
-5. Criar um script em csharp para codificar o resultado da consulta anterior
-
-// Default
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-// SQL Server
-using System.Data;
-using System.Data.SqlClient;
-
-// Geocoding
-using System.Net;
-using System.Xml.Linq;
-
-namespace Geocoding
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            string strcon = "Data source=fe80::414e:6ed4:547:5e66%9;initial catalog=Projeto;User ID=sa;Password=123";
-            SqlConnection conexao = new SqlConnection(strcon);
-            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.tbrgeocod", conexao);
-
-            try
-            {
-                int count = 0;
-                List<string> list = new List<string>();
-                conexao.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    list.Add(reader[1].ToString() + "," + reader[2].ToString() + "," + reader[3].ToString() + "," + reader[4].ToString() + "," + reader[5].ToString() + "," + reader[6].ToString());
-                    //Console.WriteLine(list[count].ToString());
-
-                    string address = list[count];
-                    string requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(address));
-
-                    WebRequest request = WebRequest.Create(requestUri);
-                    WebResponse response = request.GetResponse();
-                    XDocument xdoc = XDocument.Load(response.GetResponseStream());
-
-                    XElement result = xdoc.Element("GeocodeResponse").Element("result");
-                    XElement locationElement = result.Element("geometry").Element("location");
-
-                    XElement lat = locationElement.Element("lat");
-                    string latitude = lat.ToString();
-                    XElement lng = locationElement.Element("lng");
-                    string longitude = lng.ToString();
-
-                    //Console.WriteLine(lat.ToString() + "," + lng.ToString());
-
-                    string rlat = latitude.Replace("<lat>","").Replace("</lat>","");
-                    string rlng = longitude.Replace("<lng>", "").Replace("</lng>", "");
-                    Console.WriteLine(rlat + "," + rlng);
-
-                    count += 1;
-
-                }
-
-                Console.ReadLine();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Erro " + ex.Message);
-                Console.ReadLine();
-                throw;
-            }
-            finally
-            {
-                conexao.Close();
-            }
-        }
-    }
-}
-
-6. Criar um script em csharp para inserir os dados que foram geocodificados em um tabela
-
-select *
-from dbo.tbwgeocod as a , dbo.tbrgeocod as b
-where a.id = b.id;
-
-
-
+2. Alimentar a tabela one serão inseridos os endereços -----------------------------------------------------------------------------------------
 
 insert into tbrgeocod (rua,numero,bairro,cidade,estado,cep)
 values
@@ -199,23 +47,323 @@ values
 ('Rua José Vicente','79','Residencial Santa Paula','Jacareí','São Paulo','12300000'),
 ('Rua Maranhão','160','Residencial Santa Paula','Jacareí','São Paulo','12300000'),
 ('Rua Henrique da Cunha','115','Cidade Nova jacareí','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000'),
-('','','','Jacareí','São Paulo','12300000');
+('Rua Geraldo Braga','108','Cidade Jardim','Jacareí','São Paulo','12300000'),
+('Rua José Coutinho de Oliveira','75','Cidade Jardim','Jacareí','São Paulo','12300000'),
+('Rua Álvaro Santa Ana','82','Jardim Maria Amélia','Jacareí','São Paulo','12300000'),
+('Rua Aristídes Siqueira','206','Jardim Olympia','Jacareí','São Paulo','12300000'),
+('Rua Raul Alê','116','Jardim do Vale','Jacareí','São Paulo','12300000'),
+('Rua Abílio Pinto Pereira','76','Bandeira Branca','Jacareí','São Paulo','12300000'),
+('Rua Berta Celeste Homem de Mel','140','Jardim Terras de Santa Helena','Jacareí','São Paulo','12300000'),
+('Avenida João Alves de Oliveira','196','Parque Imperial','Jacareí','São Paulo','12300000'),
+('Rua José Vicente dos Santos','191','Jardim Emília','Jacareí','São Paulo','12300000'),
+('Rua Professor Hélio Augusto de Souza','128','Jardim Emília','Jacareí','São Paulo','12300000'),
+('Rua João Pôrto','6','Jardim Bela Vista','Jacareí','São Paulo','12300000'),
+('Rua dos Crisântemos','370','Parque Santo Antonio','Jacareí','São Paulo','12300000'),
+('Avenida das Letras','346','Vila Branca','Jacareí','São Paulo','12300000'),
+('Rua Silva Alvarenga','167','Vila Branca','Jacareí','São Paulo','12300000'),
+('Avenida Lourenço da Silva','63','Parque Meia Lua','Jacareí','São Paulo','12300000'),
+('Rua Joaquim Batalha','208','Parque Meia Lua','Jacareí','São Paulo','12300000'),
+('Rua Guaratinguetá','200','Cidade Salvador','Jacareí','São Paulo','12300000'),
+('Avenida São Jorge','1953','Cidade Salvador','Jacareí','São Paulo','12300000'),
+('Rua Sabaúna','304','Cidade Salvador','Jacareí','São Paulo','12300000');
+
+3. Criar a tabela onde será escrito o resultado da geocodificação -----------------------------------------------------------------------------------------
+
+CREATE TABLE [dbo].[tbwgeocod](
+	[id] integer identity NOT NULL PRIMARY KEY,
+	[lat] float NOT NULL,
+	[lon] float NOT NULL
+);
+
+4. Criar um arquivo csharp que realize a conexão com o SQL Server, leia uma tabela com os dados de interesse -----------------------------------------------------------------------------------------
+realize a conversão dos dados para Lat e Lng e grave o resultado da conversão em outra tabela -----------------------------------------------------------------------------------------
+
+ARQUIVO PROGRAM #######################################################################################################################################################
+
+//Default
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+// Geocoding
+using GeoLib;
+// SQL Server
+using System.Data;
+using System.Data.SqlClient;
+
+namespace GeocodingFatec
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            SqlConnection connection = new SqlConnection("Data source=10.68.54.16,1433;initial catalog=Spatial_Test;User ID=sa;Password=123456");
+            string sqlselect = ("SELECT * FROM dbo.tbrgeocod");
+            SqlCommand select = new SqlCommand(sqlselect, connection);
+
+            try
+            {
+                int countselect = 0;
+                List<string> listaddress = new List<string>();
+                List<string> listcity = new List<string>();
+                List<string> liststate = new List<string>();
+                List<string> listzip = new List<string>();
+                List<string> listlat = new List<string>();
+                List<string> listlng = new List<string>();
+                connection.Open();
+                SqlDataReader reader = select.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    listaddress.Add(reader[1].ToString() + "," + reader[2].ToString() + "," + reader[3].ToString());
+                    listcity.Add(reader[4].ToString());
+                    liststate.Add(reader[5].ToString());
+                    listzip.Add(reader[6].ToString());
+
+                    Console.WriteLine("Linha " + countselect + " verificada");
+
+                    var g = new FatecGeo();
+                    g.Key = "AIzaSyDwkRVrWvNjSqi - OnhvcvPGDu6 - rl1a4u4";
+                    var r = g.GoogleGeoCodeInfo(new Address { Address1 = listaddress[countselect], City = listcity[countselect], State = liststate[countselect], Zip = listzip[countselect] });
+                    if (g.GeoResult == FatecGeo.Result.OK)
+                    {
+                        string lat = r.Result[0].Geometry.Location.Lat;
+                        listlat.Add(lat);
+                        string lng = r.Result[0].Geometry.Location.Long;
+                        listlng.Add(lng);
+                    }
+                    countselect += 1;
+                }
+                connection.Close();
+                connection.Open();
+                int countinsert = 0;
+
+                while (countselect > 0)
+                {
+                    string sqlinsert = "INSERT INTO dbo.tbwgeocod(lat, lon) VALUES (" + listlat[countinsert] + "," + listlng[countinsert] + ");";
+                    SqlCommand insert = new SqlCommand(sqlinsert, connection);
+                    insert.ExecuteNonQuery();
+
+                    Console.WriteLine("Linha " + countinsert + " inserida");
+
+                    countinsert += 1;
+                    countselect -= 1;
+                }
+                Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro " + ex.Message);
+                Console.ReadLine();
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+    }
+}
+
+ARQUIVOS LIB #######################################################################################################################################################
+
+ARQUIVO ADDRESS #######################################################################################################################################################
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GeoLib
+{
+    public class Address
+    {
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
+    }
+}
+
+ARQUIVO FATECGEO #######################################################################################################################################################
+
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+
+namespace GeoLib
+{
+    public class FatecGeo
+    {
+        public enum Result
+        {
+            OK,
+            ZERO_RESULTS,
+            OVER_QUERY_LIMIT,
+            REQUEST_DENIED,
+            INVALID_REQUEST,
+            UNKNOWN_ERROR
+
+        }
+        const string GGeoCodeJsonServiceUrl = "https://maps.googleapis.com/maps/api/geocode/json?address={0}&key={1}";
+        public string Key { get; set; }
+        public Result GeoResult { get; set; }
+
+        public GeoResult GoogleGeoCodeInfo(Address address)
+        {
+            if (string.IsNullOrEmpty(Key))
+            {
+                throw new MissingFieldException("Your Google API Key is missing");
+            }
+
+            using (var client = new WebClient())
+            {
+                string formatAddress = string.Format(GGeoCodeJsonServiceUrl, EncodeAddress(address), Key);
+                var result = client.DownloadString(formatAddress);
+                var O = JsonConvert.DeserializeObject<GeoResult>(result);
+                SetGeoResultFlag(O.Status);
+                return O;
+            }
+        }
+        private string EncodeAddress(Address address)
+        {
+            var sb = new StringBuilder();
+
+
+            if (!string.IsNullOrEmpty(address.Address1))
+                sb.Append(Uri.EscapeUriString(" " + address.Address1));
+
+            if (!string.IsNullOrEmpty(address.Address2))
+                sb.Append(Uri.EscapeUriString(" " + address.Address2));
+
+            if (!string.IsNullOrEmpty(address.City))
+                sb.Append(Uri.EscapeUriString(" " + address.City));
+
+            if (!string.IsNullOrEmpty(address.State))
+                sb.Append(Uri.EscapeUriString(" " + address.State));
+
+            if (!string.IsNullOrEmpty(address.Zip))
+                sb.Append(Uri.EscapeUriString(" " + address.Zip));
+
+
+            return sb.ToString();
+        }
+
+        private void SetGeoResultFlag(string status)
+        {
+            switch (status)
+            {
+                case "OK":
+                    GeoResult = Result.OK;
+                    break;
+                case "ZERO_RESULTS":
+                    GeoResult = Result.ZERO_RESULTS;
+                    break;
+                case "OVER_QUERY_LIMIT":
+                    GeoResult = Result.OVER_QUERY_LIMIT;
+                    break;
+                case "REQUEST_DENIED":
+                    GeoResult = Result.REQUEST_DENIED;
+                    break;
+                case "INVALID_REQUEST":
+                    GeoResult = Result.INVALID_REQUEST;
+                    break;
+                case "UNKNOWN_ERROR":
+                    GeoResult = Result.UNKNOWN_ERROR;
+                    break;
+            }
+        }
+
+
+    }
+}
+
+ARQUIVO GEORESULTS #######################################################################################################################################################
+
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GeoLib
+{
+    public class GeoResult
+    {
+        [JsonProperty("results", NullValueHandling = NullValueHandling.Ignore)]
+        public GoogleGeoJsonResult[] Result { get; set; }
+
+        [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
+        public string Status { get; set; }
+    }
+}
+
+ARQUIVO GOOGLEGEOJSONGEORESULTS #######################################################################################################################################################
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+namespace GeoLib
+{
+    public class GoogleGeoJsonResult
+    {
+
+
+        [JsonProperty("address_components", NullValueHandling = NullValueHandling.Ignore)]
+        public AddressComponents[] Acomponents { get; set; }
+
+        [JsonProperty("formatted_address", NullValueHandling = NullValueHandling.Ignore)]
+        public string FormattedAddress { get; set; }
+
+        [JsonProperty("geometry", NullValueHandling = NullValueHandling.Ignore)]
+        public Geometry Geometry { get; set; }
+    }
+
+    public class AddressComponents
+    {
+        public string LongName { get; set; }
+        public string ShortName { get; set; }
+        public string[] Types { get; set; }
+
+    }
+    public class Geometry
+    {
+        [JsonProperty("location_type", NullValueHandling = NullValueHandling.Ignore)]
+        public string LocationType { get; set; }
+
+        [JsonProperty("location", NullValueHandling = NullValueHandling.Ignore)]
+        public Location Location { get; set; }
+    }
+
+    public class Location
+    {
+        [JsonProperty("lat", NullValueHandling = NullValueHandling.Ignore)]
+        public string Lat { get; set; }
+
+        [JsonProperty("lng", NullValueHandling = NullValueHandling.Ignore)]
+        public string Long { get; set; }
+    }
+
+}
+
+COMO USAR ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Criar uma library com os arquivos library
+Colocar a lib como referência no projeto
+Instalar o Package NewtonSsft.json com nuget
+
 

@@ -1,0 +1,14 @@
+C:\Users\diego\Documents\projetos\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\ClassLibrary1.dll
+C:\Users\diego\Documents\projetos\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
+C:\Users\diego\Documents\projetos\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\diego\Documents\projetos\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\diego\Documents\projetos\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\GeoLib.csprojResolveAssemblyReference.cache
+C:\Users\diego\Documents\projetos\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\ClassLibrary1.dll
+C:\Users\diego\Documents\projetos\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
+E:\estagio\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\ClassLibrary1.dll
+E:\estagio\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
+E:\estagio\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\Newtonsoft.Json.dll
+E:\estagio\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\Newtonsoft.Json.xml
+E:\estagio\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\GeoLib.csprojResolveAssemblyReference.cache
+E:\estagio\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\ClassLibrary1.dll
+E:\estagio\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
