@@ -63,7 +63,6 @@ Implementação de referência dos padrões WFS e WCS do OGC bem como WMS
 O geoserver organiza os dados em worspaces, dentro de cada worspaces
 existem camadas
 
-<<<<<<< HEAD
 workspaces são espaços de trabalho
 dentros destes espaços de trabalho existem containers 
 para agruapar as camadas e stores do mesmo tipo.
@@ -80,16 +79,10 @@ A fonte de daods pode ser um arquivo, grupo de arquivos, tabela do BD ou um rast
 possibilita que os parâmetros de conexão com uma fonte de daods sejam definidos uma única vez
 e utilizados em várias camadas.
 
-
-
-
-
-=======
 Worspace
 É um Container para agrupar camadas e sotores
 URI - é semelhante a uma URL, a diferença é que o URI não precisa endereçar um recurso válido,
 basta que se único no contexoto do geoserver.
->>>>>>> 6f935e7947edd455dc559ffc372a3303a4c14e5b
 
 Quando criado um workspace no geoserver ao mesmo tempo é criado uma pasta no diretório
 do computador: C:\Program Files (x86)\GeoServer 2.12.1\data_dir\worspaces
@@ -177,4 +170,129 @@ Para valor padrão pode-se desixar where true para pegar todos os valores
 http://localhost:8080/geoserver/test-jacarei/wms?service=WMS&version=1.1.0&request=GetMap&layers=test-jacarei:jacarei-tipo&styles=&bbox=-46.079340921586805,-23.3839604676792,-45.8300590833988,-23.2135795357284&width=768&height=524&srs=EPSG:4326&format=application/openlayers&viewparams=onde:where tipo like 'asfalto'
 
 Desta forma pode-se utilizar constultas espaciais também.
+
+--- CQL Common Query Language ---
+
+Ao contrário da linguagem de codificação de filtro baseada em XML o CQL é escrito usando uma sintaxe
+mais próxima ao SQL.
+
+O CQL tem algumas limitações, porém o Geoserver fornece uma versão extendida o ECQL.
+O Geoserver suporta o uso de CQL e ECQL em solicitações WMS e WFS, bem como em arquivos SLD.
+
+A interface openlayers possui um campo que permite a entrada de filtros CQL.
+
+Pode-se incluir expressões com and ou or nos filtros:
+tipo like '%poste%' or tipo = 'esgoto'
+
+Pode-se selecionar feições com a expressão in:
+tipo in ('poste','asfalto')
+
+Pode-se também selecionar em razão do id:
+in ('tipo.25','tipo.33')
+
+As geometrias podem ser acessadas com a expressão geom (quando o layer pe proveniente de um BD) e
+the_geom (quando é proveniente de um shapefile).
+
+A função bbox é usada para filtrar as geometrias que fazem intersecção com um box:
+bbox(geom,-46,-23,-44,-22)
+bbox(the_geom,46,-23,-44,-22)
+
+--- Funções CQL
+
+Relação Espacial entre geometrias:
+
+contains(geom,geom):boolean
+crosses(geom,geom):boolean
+disjoint(geom,geom):boolean
+equalsExact(geom,geom):boolean
+intesects(geom,geom):boolean
+isWithinDistance(geom,geom,double):boolean
+overlaps(geom,geom):boolean
+touches(geom,geom):boolean
+within(geom,geom):boolean
+
+Geométricas:
+
+area(geom):double
+boundary(geom):geom
+buffer(geom,double):geom
+centroid(geom:geom
+convexHull(geom):geom
+diffrence(geom,geom):double
+envelope(geom):geom
+geomFromWKT(wkt):geom
+geomLength(geom):double
+getX(Point):double
+getY(Point):double
+intersection(geom,geom):geom
+toWKT(geom):wkt
+union(geom,geom):geom
+
+**** Extensão Cross-layer filtering ****
+
+Para usar filtros que usam duas camadas, tem-se que instalar a extensão querylayer.
+https://sourceforge.net/projects/geoserver/files/GeoServer/2.12.1/extensions/
+Baixar o arquivo geoserver-2.12.1-querylayer-plugin.zip
+*Baixar conforme a versão do geoserver
+
+Colar o arquivo em:
+C:\Program Files (x86)\GeoServer 2.12.1\webapps\geoserver\WEB-INF\lib
+Parar e iniciar o geoserver para as configurações terem efeito.
+
+--- Filtros Cross-layer ---
+
+Possibilita usar duas camadas na expressão.
+O módulo querylayer adiciona funções para selecionar geometrias de uma camada secundária, ou seha, funções
+para serem usadas dentro de outra expressão de filtragem.
+
+intersects(geom,querySingle('test-jacarei:jacarei','geom','tipo=''poste'''))
+* para usar aspas simples dentro de aspas simples deve-se utilizar duas aspas simples ''poste''
+
+querySingle(layer,atributo,filtro) retorna uma geometria que satisfaz a consulta
+
+queryCollection(layer,atributo,filtro) retorna uma lista de geometrias que satisfazem a consulta
+
+collectGeometries(lista de geometrias) converte uma lista de geometrias em uma única geometria
+intersects(geom, collectGeometries(queryCollection('aula:bacia','the_geom','NOME ilike ''%tal%'''))) 
+
+// CQL Filter na URL //
+
+Um filtro pode ser incluído diretamente na URL utilizando o parâmetro cql_filter
+http://localhost:8080/geoserver/aula/wms?service=WMS&version=1.1.0&request=GetMap&layers=aula:municipio&bbox=-70,-33.9,-28.6,5.4&width=768&height=718&srs=EPSG:4326&format=image/png&exceptions=application/vnd.ogc.se_inimage&cql_filter=intersects(geom,querySingle('aula:bacia','the_geom','NOME ilike ''%25tal%25'''))
+Como existe a chance de ocorrer alguma exceção, então é interessante incluir o parâmetro exceptions na URL, ele irá retornar uma mensagem de erro.
+
+--- INCLUDE E EXCLUDE ---
+
+Tem-se de ter um filtro por camada incluída no parâmetro layers.
+Pode-se utilizar para incluir ou excluir camadas de resultados
+http://localhost:8080/geoserver/aula/wms?service=WMS&version=1.1.0&request=GetMap&layers=aula:municipio,aula:cidade&bbox=-70,-33.9,-28.6,5.4&width=768&height=718&srs=EPSG:4326&format=image/png&exceptions=application/vnd.ogc.se_inimage&cql_filter=intersects(geom,querySingle('aula:bacia','the_geom','NOME ilike ''%25tal%25'''));exclude
+
+Para alterar os estilos das camadas de resultado é preciso fornecer o parâmetro styles com os estilos das camadas separados por vírgula.
+http://localhost:8080/geoserver/aula/wms?service=WMS&version=1.1.0&request=GetMap&styles=aula:pol_amarelo,aula:pt_amarelo&layers=aula:municipio,aula:cidade&bbox=-70,-33.9,-28.6,5.4&width=768&height=718&srs=EPSG:4326&format=image/png&exceptions=application/vnd.ogc.se_inimage&cql_filter=intersects(geom,querySingle('aula:bacia','the_geom','NOME ilike ''%25tal%25''')) ;intersects(the_geom,querySingle('aula:bacia','the_geom','NOME ilike ''%25Amaz%25'''))
+
+--- CQL na criaão de camadas ---
+
+Na opção de criar novas camadas pode-se utilizar também filtros para criação conforme expressões.
+
+*** LIMITE DE MEMÓRIA DAS FUNÇÕES QUERYLAYER ***
+
+As funções queyCollection e collectGeometries executam consultas contra a camada secundária todas as vezes
+que são executadas e carregam todo o resultado na memória.
+
+Assim, as funções correm o risco de usar memória excessiva do servidor se o conjunto de daods for muito grande.
+
+Para evitar impactos com servidor alguns limites internos são configurados:
+Até 1000 feições podem ser processadoas por queryCollection
+Até 37000 coordenadsa podem ser processadas por collectGeometries
+
+Esses limites podem seralterados modificando as variáveis de ambiente do sistema
+QUERY_LAYER_MAX_FEATURES
+GEOMETRY_COLLECT_MAX_COORDINATES
+
+Deve-se acessar as variáveis de ambiente do sistema e adicinar novas variáveis com os valores desejados
+
+
+
+
+
 
