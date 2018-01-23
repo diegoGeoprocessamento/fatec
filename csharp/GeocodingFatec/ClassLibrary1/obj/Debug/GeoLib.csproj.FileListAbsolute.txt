@@ -12,3 +12,11 @@ E:\estagio\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\Newtonsoft.Json.xml
 E:\estagio\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\GeoLib.csprojResolveAssemblyReference.cache
 E:\estagio\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\ClassLibrary1.dll
 E:\estagio\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
+H:\fatec-prefeitura\map\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\ClassLibrary1.dll
+H:\fatec-prefeitura\map\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
+H:\fatec-prefeitura\map\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\Newtonsoft.Json.dll
+H:\fatec-prefeitura\map\csharp\GeocodingFatec\ClassLibrary1\bin\Debug\Newtonsoft.Json.xml
+H:\fatec-prefeitura\map\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\GeoLib.csprojResolveAssemblyReference.cache
+H:\fatec-prefeitura\map\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\GeoLib.csproj.CoreCompileInputs.cache
+H:\fatec-prefeitura\map\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\ClassLibrary1.dll
+H:\fatec-prefeitura\map\csharp\GeocodingFatec\ClassLibrary1\obj\Debug\ClassLibrary1.pdb

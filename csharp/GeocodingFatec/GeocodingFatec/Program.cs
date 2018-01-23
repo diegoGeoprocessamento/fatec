@@ -17,7 +17,7 @@ namespace GeocodingFatec
     {
         static void Main(string[] args)
         {
-            SqlConnection connection = new SqlConnection("Data source=fe80::414e:6ed4:547:5e66%9;initial catalog=projeto;User ID=sa;Password=123");
+            SqlConnection connection = new SqlConnection("Data source=10.68.54.16,1433;initial catalog=Spatial_Test;User ID=sa;Password=123456");
             string sqlselect = ("SELECT * FROM dbo.tbrgeocod");
             SqlCommand select = new SqlCommand(sqlselect, connection);
 

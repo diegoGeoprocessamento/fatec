@@ -1,4 +1,4 @@
-1- Após descompactar ir até o diretório e instalar as dependências adicionais:
+﻿1- Após descompactar ir até o diretório e instalar as dependências adicionais:
 npm install
 
 Desta forma pode-se acessar o servidor do workshop
@@ -529,5 +529,53 @@ Os dados vetoriais serão representados como imagens, ainda será possível faze
 uma qualidade menor.
 
 --- Controle de Interação ---
+
+/// Barra de escala
+
+Para mostrar a barra de escala deve-se utilizar a classe ol.control.ScaleLine
+
+Para adicioar o controle deve-se adicionar na configuração do mapa:
+
+controls: ol.control.defaults().extend([
+  new ol.control.ScaleLine()
+]),
+
+/// Reposicinar o controle
+
+Pode-se representar a ScaleLine de diversas formas com configurações css, como por exemplo:
+
+.ol-scale-line {
+  background: black;
+  padding: 5px;
+}
+
+No entanto é interessante adicionar a ScaleLine fora do mapa pois a mesma pode sobrepor informações de interesse.
+
+1. Criar um elemento em nível de bloco no <body> da página, para referenciar o elemento do controle através de um id:
+
+<div id="scale-line" class="scale-line"></div>
+
+2. Fazer com que o controle ScaleLine seja referenciado a este elemento:
+
+new ol.control.ScaleLine({
+  className: 'ol-scale-line', target: document.getElementById('scale-line')
+})
+
+3. Definir a posição do controle com declarações css:
+
+.scale-line {
+  position: absolute;
+  top: 350px;
+}
+.ol-scale-line {
+  position: relative;
+  bottom: 0px;
+  left: 0px;
+}
+
+*** Para criar um controle personalizado pode-se herdar usando a classe ol.inherits da classe ol.control.Controle
+Exemplo:  http://openlayers.org/en/master/examples/custom-controls.html
+
+
 
 
