@@ -43,7 +43,7 @@ namespace GeocodingFatec
                     Console.WriteLine("Linha " + countselect + " verificada");
 
                     var g = new FatecGeo();
-                    g.Key = "AIzaSyDwkRVrWvNjSqi - OnhvcvPGDu6 - rl1a4u4";
+                    g.Key = "API KEY";
                     var r = g.GoogleGeoCodeInfo(new Address { Address1 = listaddress[countselect], City = listcity[countselect], State = liststate[countselect], Zip = listzip[countselect] });
                     if (g.GeoResult == FatecGeo.Result.OK)
                     {
