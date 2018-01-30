@@ -1,0 +1,59 @@
+body{
+	background:url(imagens/background.jpg); /*inserção da imagem de fundo em todo o site*/
+	color:#868686; /*cor padrão para todas as fontes*/
+	font-family: "Open Sans", Helvetica, sans-serif, arial; /*definição da fonte geral incorporada do Google Fonts*/
+	font-size: 18px; /*tamanho da fonte*/
+	font-weight: 300; /*indica que a fonte está coonfigurada como Open Sans Light*/
+	line-height: 22px;/*altura da linha*/
+	text-align: left; /*alinhando o texto à esquerda*/
+	text-shadow:1px 1px 0px #fff; /*sombreamento para as fontes do site*/
+}
+.center{
+	margin: 0 auto; /*centralizando o conteúdo no navegador*/
+	width: 1200px; /*largura do layout*/		
+}
+
+/*.clearfix usado para adicionar um espaço vazio antes e depois dos elementos
+  evitando que os floats se aglomerem.
+*/
+.clearfix:before, .clearfix:after {
+    content: " "; 
+    display: table; 
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+    *zoom: 1;
+}
+/*fim do clearfix*/
+img, picture, video, embed {
+    max-width: 100%; /*define a largura máxima em até 100%*/
+}
+h1, h2{
+	color:#FE9380;
+	font-size: 60px;
+	font-weight: 800;
+	letter-spacing: -3px; /*espaçamento entre as letras*/
+	line-height: 60px;
+}
+h3{
+	font-size: 32px;
+	font-weight: 300;
+	letter-spacing: -2px; /*espaçamento entre as letras*/
+	line-height: 38px;
+}
+p{
+	font-weight: 300;/*modifica a força da fonte para light*/
+	letter-spacing: -1px; /*espaçamento entre as letras*/
+}
+a, a:link, a:visited{
+	color:#FE9380; /*cor dos links*/
+	font-weight:400; /*modifica a força da fonte para semi-bold*/
+	text-decoration:none; /*retira o sublinhado dos links*/
+}
+a:hover{
+	color:#FE5E41;
+	text-decoration:underline; /*inseri uma linha sob o link*/
+	text-shadow:none; /*retira a sombra da fonte*/
+}

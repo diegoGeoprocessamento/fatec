@@ -1,0 +1,131 @@
+---PROJETO PARA SEGUINTES RESOLUÇÕES
+
+320 pixel – Smartphones no formato retrato
+480 pixel – Smartphones no formato paisagem
+768 pixel – Tablets no formato retrato
+960 pixel – Tablets no formato paisagem e alguns monitores mais antigos
+1200 pixel – Desktops com monitores widescreen
+
+---Estrutura de trabalho
+estilo.css
+index.html
+folder imagens
+
+Deve-se analisar o layout e identificar as seções para criar as divs, tags e classes.
+
+Background - Imagem distribuída para todo o layout.
+Header - div #topo todo o cabeçalho contido na tag <header> logotipo e menu.
+Seções/Conteúdo - Seção .chamada, .container com 3 colunas .desktop, .tablet e .mobile.
+Footer - com duas colunas para os conteúdos.
+
+---Marcação Báscica para HTML5
+
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Site Responsivo</title>
+        <meta charset="utf-8">
+        
+        <link rel="stylesheet" href="estilo.css" type="text/css">
+        <meta name="viewport" content="width=divice-width, initial-scale=1.0">
+    </head>
+    <body>
+
+    </body>
+</html>
+
+<meta name="viewport" content="width=divice-width, initial-scale=1.0">
+A maioria dos navagadores para dispostivos móveis, tentam exibir as páginas
+como se estivessem sendo exibidas em desktops, ocacionando problemas de responsividade.
+
+A meta tag viewport trabalha com resoluções personaçlizadas inclusive na rendereziação do zoom,
+manipulando a escala incial do site.
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title>Como Criar Site Responsivo com HTML5 e CSS3 - CarlosHPS Blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="center clearfix">
+    <header>
+        <h1>Logotipo</h1>
+        <nav>
+			menu de Navegação
+        </nav><!-- fim nav -->
+    </header><!-- fim header -->
+	<section class="chamada">
+    	<h2>Como Criar um SITE RESPONSIVO com HTML5 e CSS3</h2>
+  		<h3>Com este tutorial você verá como criar um site responsivo onde poderá ser bem visualizado em desktops, tablets e smartphones</h3>
+    </section><!-- fim .chamada -->
+	<section class="container">
+    	<div class="desktop">
+			<h3>Site Responsivo DESKTOP</h3>
+            <p>Com este tutorial você verá e aprenderá, de maneira simples, como criar um site responsivo,
+            multivisualização de dispositivos onde poderá ser bem visualizado na maioria dos desktops, tablets
+          e smartphones.</p>
+        </div><!-- fim #desktop -->
+        <div class="tablet">
+			<h3>Site Responsivo TABLET</h3>
+            <p>Com este tutorial você verá e aprenderá, de maneira simples, como criar um site responsivo,
+            multivisualização de dispositivos onde poderá ser bem visualizado na maioria dos desktops, tablets
+          e smartphones.</p>
+        </div><!-- fim #tablet -->
+        <div class="mobile">
+			<h3>Site Responsivo MOBILE</h3>
+            <p>Com este tutorial você verá e aprenderá, de maneira simples, como criar um site responsivo,
+            multivisualização de dispositivos onde poderá ser bem visualizado na maioria dos desktops, tablets
+          e smartphones.</p>
+        </div><!-- fim #mobile -->
+	</section><!-- fim .container -->
+    <footer>
+    	<small class="copyright">
+        	<p>Copyright © 2014 - Todos os Direitos Reservados ao <a href="http://www.carloshps.com.br/blog" title="CarlosHPS Blog - Criar Site Responsivo com HTML5 e CSS3">CarlosHPS Blog</a></p>
+        </small><!-- fim .copyright -->
+        <small class="desenvolvedor">
+            Desenvolvedor
+        </small><!-- fim .desenvolvedor -->
+    </footer><!-- fim footer -->
+</body>
+</html>
+
+---Configurações básicas css
+
+utilizar o normalize.css
+http://necolas.github.io/normalize.css/
+
+<head>
+    <title>Como Criar Site Responsivo com HTML5 e CSS3 - CarlosHPS Blog</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <link href='http://necolas.github.io/normalize.css/+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+Ajustes iniciais:
+
+body{
+	background:url(imagens/background.jpg); /*inserção da imagem de fundo em todo o site*/
+	color:#868686; /*cor padrão para todas as fontes*/
+	font-family: "Open Sans", Helvetica, sans-serif, arial; /*definição da fonte geral incorporada do Google Fonts*/
+	font-size: 18px; /*tamanho da fonte*/
+	font-weight: 300; /*indica que a fonte está coonfigurada como Open Sans Light*/
+	line-height: 22px;/*altura da linha*/
+	text-align: left; /*alinhando o texto à esquerda*/
+	text-shadow:1px 1px 0px #fff; /*sombreamento para as fontes do site*/
+}
+.center{
+	margin: 0 auto; /*centralizando o conteúdo no navegador*/
+	width: 1200px; /*largura do layout*/		
+}
+
+Formatação Geral:
+
+
+
+
+
+

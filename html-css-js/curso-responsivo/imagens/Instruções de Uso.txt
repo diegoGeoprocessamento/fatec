@@ -1,0 +1,36 @@
+/**********************
+CarlosHPS Blog
+"Artigos e Tutoriais"
+**********************/
+
+/**********************
+DADOS GERAIS / VERSÃO
+**********************/
+Versão 1.0
+Atualizado em: 06/05/2014
+Autor: CarlosHPS Webdesigner
+Site: www.carloshps.com.br/blog
+
+/**********************
+O QUE PODE SER FEITO
+**********************/
+Este arquivo é 100% livre e pode ser distribuído para fins não lucrativos.
+
+/**********************
+DIREITOS DE USOFRUTO
+**********************/
+
+Atribuição-Uso Não-Comercial-Vedada a Criação de Obras Derivadas 3.0
+Você pode:
+
+    * copiar, distribuir, exibir e executar a obra
+
+Sob as seguintes condições:
+
+    * Atribuição — Você deve dar crédito ao autor original, da forma especificada pelo autor ou licenciante.
+
+    * Uso Não-Comercial — Você não pode utilizar esta obra com finalidades comerciais.
+
+    * Vedada a Criação de Obras Derivadas — Você não pode alterar, transformar ou criar outra obra com base nesta.
+
+Maiores informações sobre os direitos, acesse: http://creativecommons.org/licenses/by-nc-nd/3.0/deed.pt
